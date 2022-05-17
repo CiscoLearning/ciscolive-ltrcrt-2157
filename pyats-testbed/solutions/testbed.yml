@@ -1,0 +1,85 @@
+---
+devices:
+  inet-rtr02:
+    os: iosxe
+    platform: cat8k
+    connections:
+      defaults:
+        class: unicon.Unicon
+      cli:
+        protocol: ssh
+        ip: 198.18.1.11
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+
+  core-rtr02:
+    os: iosxe
+    platform: cat8k
+    connections:
+      defaults:
+        class: unicon.Unicon
+      cli:
+        protocol: ssh
+        ip: 198.18.1.13
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+
+  access-rtr01:
+    os: iosxe
+    platform: cat8k
+    connections:
+      defaults:
+        class: unicon.Unicon
+      cli:
+        protocol: ssh
+        ip: 198.18.1.14
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+
+topology:
+  inet-rtr02:
+    interfaces:
+      Loopback0:
+        type: ethernet
+        ipv4: 172.20.100.11/32
+      GigabitEthernet2:
+        type: ethernet
+        ipv4: 192.168.1.130/30
+      GigabitEthernet3:
+        type: ethernet
+      GigabitEthernet4:
+        type: ethernet
+      GigabitEthernet5:
+        type: ethernet
+
+  core-rtr02:
+    interfaces:
+      Loopback0:
+        type: loopback
+        ipv4: 172.20.100.13/32
+      GigabitEthernet2:
+        type: ethernet
+      GigabitEthernet3:
+        type: ethernet
+      GigabitEthernet4:
+        type: ethernet
+      GigabitEthernet5:
+        type: ethernet
+      GigabitEthernet6:
+        type: ethernet
+
+  access-rtr01:
+    interfaces:
+      Loopback0:
+        type: loopback
+        ipv4: 172.20.100.14/32
+      GigabitEthernet2:
+        type: ethernet
+      GigabitEthernet3:
+        type: ethernet

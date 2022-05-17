@@ -1,0 +1,63 @@
+---
+devices:
+  inet-rtr02:
+    os: iosxe
+    platform: cat8k
+    connections:
+      defaults:
+        class: unicon.Unicon
+        via: cli
+      cli:
+        protocol:  # <TODO> - Use ssh as CLI protocol
+        ip:  # <TODO> - Specify correct IP of device
+    credentials:
+      default:
+        username:  # <TODO> - Specify username for device connection
+        password:  # <TODO> - Specify password for device connection
+
+  core-rtr02:
+    os: iosxe
+    platform: cat8k
+    connections:
+      defaults:
+        class: unicon.Unicon
+      # <TODO> Create CLI connection using SSH to device
+    # <TODO> Add default credentials for the device
+
+  access-rtr01:
+    os: iosxe
+    platform: cat8k
+    connections:
+      defaults:
+        class: unicon.Unicon
+      # <TODO> Create CLI connection using SSH to device
+    # <TODO> Add default credentials for the device
+
+topology:
+  inet-rtr02:
+    interfaces:
+      Loopback0:
+        type: ethernet
+        ipv4: # <TODO> Complete Loopback0 IP information
+      GigabitEthernet2:
+        type: ethernet
+        # <TODO> Add key/value for GigabitEthernet2 IPv4 address
+      GigabitEthernet3:
+        type: ethernet
+      GigabitEthernet4:
+        type: ethernet
+      # <TODO> Add remaining interface
+
+  core-rtr02:
+    interfaces:
+      Loopback0:
+        type: loopback
+        ipv4: # <TODO> Complete Loopback0 IP information
+      # <TODO> Add remaining interfaces
+
+  access-rtr01:
+    interfaces:
+      Loopback0:
+        type: loopback
+        ipv4: # <TODO> Complete Loopback0 IP information
+      # <TODO> Add remaining interfaces
