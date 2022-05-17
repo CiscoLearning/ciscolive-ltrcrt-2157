@@ -1,0 +1,43 @@
+---
+# Best practice is to leave the testbed untouched, so it defines the
+# initial state of each device.  Any custom attribute for a device or interface
+# can be defined in a different file that extends the initial testbed.  In
+# this case, this testbed inherits all settings for every device and adds some
+# custom fields that can be used in the configuration or testing process.
+#
+# Custom attributes are accessible using the device object attribute "custom"
+# For example: device.custom.ntp_source will return the custom NTP source
+# interface.  This is a very powerful feature of pyATS!
+#
+extends: "%ENV{HOME}/abc-en/pyats-testbed/testbed.yml"
+
+# Observe this extended testbed uses the exact same syntax as the
+# initial testbed file, differing only by the definition of custom attributes.
+devices:
+  inet-rtr02:
+    # Observe that custom: is followed by a newline and more
+    # indentation.  This creates a nested dictionary where custom is the
+    # key and the value is a dictionary with keys ntp_servers and
+    # ntp_source.  Each nested dictionary key can have its own data
+    # structure as a value.  Indentation is VERY important with YAML to ensure
+    # that you are creating the expected data structure!
+    custom:
+      ntp_servers:
+        # In YAML, a list is created by prefixing each element with
+        # a dash (-) and a space.  In this case, ntp_servers is a list with a
+        # single element: the string 192.168.100.1
+        - 192.168.100.1
+      # Observe the value Loopback0 is on the same line as the
+      # key, ntp_source.  This creates a key/value pair (dictionary).
+      ntp_source: Loopback0
+
+  core-rtr02:
+    custom:
+      ntp_servers:
+        -  # <TODO> - Define NTP server list for core-rtr02
+      ntp_source:  # <TODO> - Define NTP source interface
+
+  access-rtr01:
+    custom:
+      ntp_servers:  # <TODO> - Define NTP server list for access-rtr01
+      # <TODO> - Define key and value for NTP source interface

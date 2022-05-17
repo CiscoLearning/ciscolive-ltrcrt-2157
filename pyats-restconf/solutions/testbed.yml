@@ -1,0 +1,101 @@
+---
+extends: "%ENV{HOME}/abc-en/pyats-testbed/testbed.yml"
+
+devices:
+  inet-rtr02:
+    connections:
+      rest:
+        class: rest.connector.Rest
+        ip: 198.18.1.11
+        credentials:
+          rest:
+            username: cisco
+            password: cisco
+    custom:
+      ospf:
+        process_id: 1
+        default_originate: true
+
+  core-rtr02:
+    connections:
+      rest:
+        class: rest.connector.Rest
+        ip: 198.18.1.13
+    custom:
+      ospf:
+        process_id: 1
+        ospf_area:
+          - area_id: 10
+            area_type: stub
+            summary: false
+
+  access-rtr01:
+    connections:
+      rest:
+        class: rest.connector.Rest
+        ip: 198.18.1.14
+    custom:
+      ospf:
+        process_id: 1
+        ospf_area:
+          - area_id: 10
+            area_type: stub
+
+topology:
+  inet-rtr02:
+    interfaces:
+      Loopback0:
+        ospf_process: 1
+        ospf_area: 0
+      GigabitEthernet3:
+        ospf_process: 1
+        ospf_area: 0
+        ospf_network_type: point-to-point
+      GigabitEthernet4:
+        ospf_process: 1
+        ospf_area: 0
+        ospf_network_type: point-to-point
+      GigabitEthernet5:
+        ospf_process: 1
+        ospf_area: 0
+        ospf_network_type: point-to-point
+
+  core-rtr02:
+    interfaces:
+      Loopback0:
+        ospf_process: 1
+        ospf_area: 0
+      GigabitEthernet2:
+        ospf_process: 1
+        ospf_area: 0
+        ospf_network_type: point-to-point
+      GigabitEthernet3:
+        ospf_process: 1
+        ospf_area: 0
+        ospf_network_type: point-to-point
+      GigabitEthernet4:
+        ospf_process: 1
+        ospf_area: 10
+        ospf_network_type: point-to-point
+      GigabitEthernet5:
+        ospf_process: 1
+        ospf_area: 0
+        ospf_network_type: point-to-point
+      GigabitEthernet6:
+        ospf_process: 1
+        ospf_area: 0
+        ospf_network_type: point-to-point
+
+  access-rtr01:
+    interfaces:
+      Loopback0:
+        ospf_process: 1
+        ospf_area: 10
+      GigabitEthernet2:
+        ospf_process: 1
+        ospf_area: 10
+        ospf_network_type: point-to-point
+      GigabitEthernet3:
+        ospf_process: 1
+        ospf_area: 10
+        ospf_network_type: point-to-point

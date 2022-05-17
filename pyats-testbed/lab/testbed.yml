@@ -21,6 +21,7 @@ devices:
     connections:
       defaults:
         class: unicon.Unicon
+        via: cli
       # <TODO> Create CLI connection using SSH to device
     # <TODO> Add default credentials for the device
 
@@ -30,6 +31,7 @@ devices:
     connections:
       defaults:
         class: unicon.Unicon
+        via: cli
       # <TODO> Create CLI connection using SSH to device
     # <TODO> Add default credentials for the device
 
@@ -38,26 +40,46 @@ topology:
     interfaces:
       Loopback0:
         type: ethernet
-        ipv4: # <TODO> Complete Loopback0 IP information
+        ipv4: 172.20.100.11/32
+        description: Local Loopback
       GigabitEthernet2:
         type: ethernet
         # <TODO> Add key/value for GigabitEthernet2 IPv4 address
+        description: To GigabitEthernet3.provider-rtr
       GigabitEthernet3:
         type: ethernet
+        description:  # <TODO> Add a useful description for this interface
       GigabitEthernet4:
         type: ethernet
-      # <TODO> Add remaining interface
+        # <TODO> Add a useful description for this interface
+      # <TODO> Add remaining ethernet interface and description
 
   core-rtr02:
     interfaces:
       Loopback0:
         type: loopback
         ipv4: # <TODO> Complete Loopback0 IP information
-      # <TODO> Add remaining interfaces
+        description: Local Loopback
+      GigabitEthernet2:
+        type: ethernet
+        description: To GigabitEthernet5.inet-rtr01
+      GigabitEthernet3:
+        type: ethernet
+        description: To GigabitEthernet5.inet-rtr02
+      GigabitEthernet4:
+        type: ethernet
+        description: To GigabitEthernet3.access-rtr01
+      # <TODO> Add remaining interfaces and descriptions
 
   access-rtr01:
     interfaces:
       Loopback0:
         type: loopback
         ipv4: # <TODO> Complete Loopback0 IP information
-      # <TODO> Add remaining interfaces
+        description: Local Loopback
+      GigabitEthernet2:
+        type: ethernet
+        description: To GigabitEthernet4.core-rtr01
+      GigabitEthernet3:
+        type: ethernet
+        description: To GigabitEthernet4.core-rtr02

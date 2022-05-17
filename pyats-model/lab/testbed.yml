@@ -1,0 +1,4 @@
+---
+# DEV NOTE: See note #1 in DEVELOPER_NOTES.md for more information.
+extends: "%ENV{HOME}/abc-en/testbed/testbed.yml"
+
