@@ -22,14 +22,31 @@
 # tests that may succeed.
 #
 # In this example, the first assert statement will generate an exception
-# named "AssertionError" which is a built-in Python exception.  The
-# second assert statement, which will evaluate to be TRUE, will never
+# named "AssertionError" which is a built-in Python exception.  Observe the
+# following:
+#  - The arguments for the assert are NOT in parenthesis.  Unlike other
+#    funcitons, Python will interpret parenthesis in an assertion as a
+#    tuple and the test will not succeed.  This may not be true for more
+#    recent versions of Python, but older versions may not handle
+#    parenthesis correctly.
+#
+#  - There is a second parameter to the assertion, identified by a comma
+#    and a string to output contained in quotes.  This is the "assertion
+#    message" and is optional.  If provided, the assertion message should
+#    provide a description of the test being performed.
+#
+# When an assertion message is provided, it will be printed along with the
+# generation AssertionError exception.  Otherwise, the message is useful
+# to explain what the purpose of the test is.
+#
+# The second assert statement, which will evaluate to be TRUE, will never
 # be tested.  Try it using the command:
 #
 # python bad_assert.py
 
-# This will result in a value of False and generate an AssertionError.
-assert 2 == 1
+# This will result in a value of False, generate an AssertionError, and
+# display the failed assertion message.
+assert 2 == 1, "Test that 2 equals 1"
 
 # This would result in a value of True but will never be tested.
-assert 1 == 1
+assert 1 == 1, "Test that 1 equals 1"

@@ -1,0 +1,27 @@
+---
+extends: "%ENV{HOME}/abc-en/testbed/testbed.yml"
+
+topology:
+  inet-rtr02:
+    interfaces:
+      GigabitEthernet2:
+        shutdown: false
+
+  core-rtr02:
+    interfaces:
+      Loopback0:
+        shutdown: false
+        description: Local loopback
+      GigabitEthernet4:
+        shutdown: false
+        unnumbered_intf_ref: Loopback0
+      GigabitEthernet5:
+        unnumbered_intf_ref: Loopback0
+      GigabitEthernet6:
+        shutdown: false
+
+  access-rtr01:
+    interfaces:
+      GigabitEthernet3:
+        shutdown: false
+        unnumbered_intf_ref: Loopback0

@@ -31,6 +31,6 @@ try:
     # This will result in a value of True.
     assert 1 == 1
 except AssertionError:
-    print("This should never be printed, because 1 equals 1!")
+    print("This should never be printed, because 1 equals 1.")
 else:
     print("This will always be printed because no exception was raised!")
