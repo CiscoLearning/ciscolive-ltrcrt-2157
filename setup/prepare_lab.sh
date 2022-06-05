@@ -21,7 +21,7 @@ CMD="${PYTHON_BIN} ${CML_STARTUP_SCRIPT}"
 
 LABS="python-exceptions \
 pyats-testbed \
-pyats-snapshots \
+snapshots \
 pyats-cli \
 pyats-jinja2 \
 pyats-model \
