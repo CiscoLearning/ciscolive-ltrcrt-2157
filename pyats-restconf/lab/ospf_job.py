@@ -1,8 +1,8 @@
 """
-Sample pyATS Easypy job file for interface testing.
+Sample pyATS Easypy job file for OSPF testing.
 
 Example:
-    pyats run job interface_job.py --testbed-file <your tb file>
+    pyats run job ospf_job.py --testbed-file <your tb file>
 
 Arguments:
     --testbed-file: Path and filename of the pyATS testbed file

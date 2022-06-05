@@ -52,7 +52,7 @@ for LAB in ${LABS}; do
   echo "Preparing activity ${LAB}..."
   if [ -d ${LAB_PATH} ]; then
     mkdir -p ${TARGET_DIRECTORY}/${LAB}
-    cp -prf ${LAB_PATH}/ ${TARGET_DIRECTORY}/${LAB}/
+    cp -prf ${LAB_PATH}/* ${TARGET_DIRECTORY}/${LAB}/
   else
     echo "No lab directory found - skipping..."
   fi

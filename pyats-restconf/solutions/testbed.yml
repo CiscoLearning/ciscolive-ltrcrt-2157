@@ -81,10 +81,6 @@ topology:
         ospf_process: 1
         ospf_area: 0
         ospf_network_type: point-to-point
-      GigabitEthernet6:
-        ospf_process: 1
-        ospf_area: 0
-        ospf_network_type: point-to-point
 
   access-rtr01:
     interfaces:

@@ -1,8 +1,8 @@
 """
 Example pyATS test using the AEtest automation harness and Easypy
-runtime environment for interface state testing.
+runtime environment for OSPF state testing.
 
-The job script (interface_job.py) initializes the testbed, triggers
+The job script (ospf_job.py) initializes the testbed, triggers
 this testscript, and handles generation of HTML logs for task
 execution.
 """
@@ -49,7 +49,7 @@ class CommonSetup(aetest.CommonSetup):
 
 class TestOspf(aetest.Testcase):
     """
-    Main Testcase.  Perform checks against desired vs configured interface
+    Main Testcase.  Perform checks against desired vs configured OSPF
     state on the IOSXE platform.
     """
 
@@ -65,7 +65,7 @@ class TestOspf(aetest.Testcase):
         Initial setup tasks for this Testcase.  Tasks performed:
             - Initialize the object attribute "device" as a reference to the
               testbed device object for the current host.
-            - Mark the "test_interface" method for looping where method
+            - Mark the "test_interface_ospf" method for looping where method
               parameter "interface_name" will represent the currently
               iterated interface's name.
 
@@ -84,18 +84,37 @@ class TestOspf(aetest.Testcase):
     @aetest.test
     def test_ospf_process(self, steps):
         """
-        docstring
+        Test the OSPF router process configuration.  Gather the running config
+        for the router with process id matching the device custom attribute
+        ospf["process_id"] and test the following:
+          - OSPF router ID matches the desired
+          - If default_originate_always or default_originate is defined for
+            the process, check the corresponding CLI line is present
+          - If areas are defined (e.g. stub/NSSA) in the device custom OSPF
+            attributes, validate they are present in the running config and
+            that no-summary exists if the area is a total stub/NSSA
 
-        :param steps:
+        :param steps: Reserved parameter argument representing the current
+            step iteration.
 
         :return: None (no return)
         """
+        # Get the OSPF process running config.  Strip the first dict key which
+        # will be "router ospf (process)" so the config dict only contains
+        # config lines for the OSPF process.
         ospf_config = self.device.api.get_router_ospf_section_running_config(
             ospf_process_id=self.device.custom.ospf["process_id"])
         ospf_config = ospf_config[f"router ospf {self.device.custom.ospf['process_id']}"]
-        logger.info("OSPF config: %s", ospf_config)
-        with steps.start("Router-ID matches Loopback0 IP"):
-            assert f"router-id {self.device.interfaces['Loopback0'].ipv4.ip}" in ospf_config
+
+        # Check the router ID
+        with steps.start("Router-ID matches Loopback0 IP") as step:
+            try:
+                assert f"router-id {self.device.interfaces['Loopback0'].ipv4.ip}" in ospf_config, \
+                    "Router ID should match the IP address of Loopback0"
+            except AssertionError:
+                step.failed("Configured router-id does not match Loopback0 IP.")
+            else:
+                step.passed("Configured router-id is present and matches Loopback0 IP.")
 
         with steps.start("Default route origination") as step:
             if "default_originate_always" in self.device.custom.ospf and self.device.custom.ospf["default_originate_always"]:
@@ -105,7 +124,12 @@ class TestOspf(aetest.Testcase):
             else:
                 step.skipped("No default origination desired.")
 
-            assert ospf_cli in ospf_config
+            try:
+                assert ospf_cli in ospf_config, "Validate default route origination"
+            except AssertionError:
+                step.failed(f"Desired configuration '{ospf_cli}' not found in running config.")
+            else:
+                step.passed("Desired default route origination present in running config.")
 
         with steps.start("OSPF Area configuration") as step:
             try:
@@ -114,18 +138,28 @@ class TestOspf(aetest.Testcase):
                         ospf_cli = f"area {ospf_area['area_id']} {ospf_area['area_type']}"
                         if not ospf_area.get("summary", True):
                             ospf_cli = f"{ospf_cli} no-summary"
+                        try:
+                            assert ospf_cli in ospf_config, "Validate OSPF area configuration"
+                        except AssertionError:
+                            substep.failed(f"Desired configuration '{ospf_cli}' not found in running config.")
+                        else:
+                            substep.passed("Desired area configuration present in running config.")
 
-                        assert ospf_cli in ospf_config
             except KeyError:
                 step.skipped("No areas defined")
 
     @aetest.test
     def test_interface_ospf(self, interface_name, steps):
         """
-        Docstring
+        Test the OSPF configuration for each interface.  Running config should
+        include the OSPF process, correct area, and network type (if specified)
 
-        :param interface_name:
-        :param steps:
+        Desired configuration is defined for each interface using ospf_ keys.
+
+        :param interface_name: Current iteration of the interface as marked for
+            looping during setup.
+        :param steps: Reserved parameter argument representing the current
+            step iteration.
 
         :return: None (no return)
         """
@@ -133,6 +167,8 @@ class TestOspf(aetest.Testcase):
 
         current_interface = self.device.interfaces[interface_name]
 
+        # Get the current interface config and strip the first key from the
+        # output to give a dict with only the interface config.
         current_interface_config = self.device.api.get_interface_running_config(
             interface=current_interface.name
         )
@@ -140,30 +176,37 @@ class TestOspf(aetest.Testcase):
             f"interface {current_interface.name}"
         ]
 
-        logger.info("Interface config: %s", current_interface_config)
-
         with steps.start("OSPF Process and Area") as step:
             try:
+                # Initialize variables for testing
                 desired_process = current_interface.ospf_process
                 desired_area = current_interface.ospf_area
 
+                # Default process and area = None.  Default network type is
+                # broadcast
                 configured_process = None
                 configured_area = None
                 configured_network_type = "broadcast"
                 # pylint: disable-next=unused-variable
                 configured_network_option = ""
 
+                # Regular expressions to grab process, area, network type
                 ospf_process_area_regex = re.compile(r"^ip ospf (\d+) area (\d+)")
                 ospf_network_type_regex = re.compile(r"^ip ospf network (\S+)\s?(non-broadcast)?$")
+
+                # Try to match the area and type regex, if present then collect
+                # variables based on the regex groups.
                 for config_line in current_interface_config:
                     if parsed_line := ospf_process_area_regex.match(config_line):
                         configured_process, configured_area = parsed_line.groups()
                     elif parsed_line := ospf_network_type_regex.match(config_line):
                         configured_network_type, configured_network_option = parsed_line.groups()
 
+                # Test the interface OSPF process matches desired
                 with step.start("OSPF Process") as substep:
                     try:
-                        assert int(desired_process) == int(configured_process)
+                        assert int(desired_process) == int(configured_process), \
+                            "Test interface OSPF process"
                     except AssertionError:
                         substep.failed(f"Expecting process {desired_process}, configured is {configured_process}")
                     except TypeError:
@@ -171,9 +214,11 @@ class TestOspf(aetest.Testcase):
                     else:
                         substep.passed(f"Interface configured for desired process {desired_process}")
 
+                # Test configured OSPF area of interface
                 with step.start("OSPF Area") as substep:
                     try:
-                        assert int(desired_area) == int(configured_area)
+                        assert int(desired_area) == int(configured_area), \
+                            "Test the interface OSPF area"
                     except AssertionError:
                         substep.failed(f"Expecting area {desired_area}, configured is {configured_area}")
                     except TypeError:
@@ -181,17 +226,18 @@ class TestOspf(aetest.Testcase):
                     else:
                         substep.passed(f"Interface configured for desired area {desired_area}")
 
+                # And the network type
                 with step.start("OSPF Network Type") as substep:
                     try:
                         desired_network_type = current_interface.ospf_network_type
-                        assert desired_network_type == configured_network_type
+                        assert desired_network_type == configured_network_type, \
+                            "Test defined OSPF network type"
                     except AttributeError:
                         substep.skipped("No network type defined for interface")
                     except AssertionError:
                         substep.failed(f"Expecting network type '{desired_network_type}', configured is '{configured_network_type}'")
                     else:
                         substep.passed(f"Expected network type '{desired_network_type}' configured for interface")
-
 
                 # This section not used in this lab; leaving source as an example
                 # with step.start("OSPF multipoint non-broadcast option") as substep:
@@ -211,13 +257,34 @@ class TestOspf(aetest.Testcase):
 
     @aetest.test
     def test_ping_from_loopback(self, steps):
+        """
+        If OSPF is properly configured, every Loopback0 interface should be
+        reachable from Loopback0 on each device.  All devices in the site
+        should also be able to ping the provider-rtr Loopback0 from their
+        own Loopback0.
 
+        :param steps: Reserved parameter argument representing the current
+            step iteration.
+
+        :return: None (no return)
+        """
+
+        # Each ping task will be a separate step
         with steps.start("Ping from Loopback0") as step:
             for remote_ip in ALL_LOOPBACKS:
+
+                # If one ping fails, keep trying other targets
                 with step.start(remote_ip, continue_=True) as substep:
+                    # No sense pinging Loopback0 of the local device...
                     if str(remote_ip) != str(self.device.interfaces["Loopback0"].ipv4.ip):
                         try:
-                            assert self.device.api.verify_ping(address=remote_ip, source="Loopback0", count=3, max_time=1, check_interval=1)
+                            # Ping 3 times, timeout 1 second, interval 1 second
+                            assert self.device.api.verify_ping(address=remote_ip,
+                                                               source="Loopback0",
+                                                               count=3,
+                                                               max_time=1,
+                                                               check_interval=1), \
+                                "Test Loopback0 reachability to every device"
                         except AssertionError:
                             substep.failed("Ping failed - remote loopback unreachable")
                         else:
@@ -228,7 +295,8 @@ class TestOspf(aetest.Testcase):
     @aetest.cleanup
     def cleanup(self):
         """
-        Some docstring
+        Testcase cleanup tasks.  Only action needed is to disconnect from the
+        current device...
 
         :return: None (no return)
         """

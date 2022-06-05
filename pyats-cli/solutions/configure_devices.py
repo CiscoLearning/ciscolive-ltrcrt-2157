@@ -25,7 +25,7 @@ from commands import command_list
 # Path and name of the pyATS testbed file to load.  Python does not support
 # true constants, but variables that should be used as a constant should use
 # UPPERCASE names.
-TESTBED = "~/abc-en/testbed/testbed.yml"
+TESTBED = "~/abc-en/pyats-testbed/testbed.yml"
 
 # Load the testbed.  The pyATS "loader.load()" handles the import and parsing
 # of the YAML testbed file, without requiring additional Python packages

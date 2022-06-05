@@ -1,5 +1,5 @@
 ---
-extends: "%ENV{HOME}/abc-en/testbed/testbed.yml"
+extends: "%ENV{HOME}/abc-en/pyats-testbed/testbed.yml"
 
 topology:
   inet-rtr02:

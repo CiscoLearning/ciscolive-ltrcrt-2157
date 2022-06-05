@@ -41,8 +41,6 @@ devices:
           - area_id: 10
             area_type: stub
 
-
-
 topology:
   inet-rtr02:
     interfaces:
@@ -80,10 +78,6 @@ topology:
         ospf_area: 10
         ospf_network_type: point-to-point
       GigabitEthernet5:
-        ospf_process: 1
-        ospf_area: 0
-        ospf_network_type: point-to-point
-      GigabitEthernet6:
         ospf_process: 1
         ospf_area: 0
         ospf_network_type: point-to-point

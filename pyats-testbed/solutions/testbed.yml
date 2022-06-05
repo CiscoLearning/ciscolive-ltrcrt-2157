@@ -84,9 +84,6 @@ topology:
       GigabitEthernet5:
         type: ethernet
         description: To GigabitEthernet5.core-rtr01
-      GigabitEthernet6:
-        type: ethernet
-        description: To GigabitEthernet6.core-rtr01
 
   access-rtr01:
     interfaces:

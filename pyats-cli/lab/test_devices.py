@@ -17,7 +17,7 @@ Steps:
 from pyats.topology import loader
 from commands import command_list
 
-TESTBED = "~/abc-en/testbed/testbed.yml"
+TESTBED = "~/abc-en/pyats-testbed/testbed.yml"
 
 testbed = loader.load(TESTBED)
 

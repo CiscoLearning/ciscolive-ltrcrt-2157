@@ -17,7 +17,7 @@ Steps:
 from pyats.topology import loader
 from commands import command_list
 
-TESTBED = "~/abc-en/testbed/testbed.yml"
+TESTBED = "~/abc-en/pyats-testbed/testbed.yml"
 
 testbed = loader.load(TESTBED)
 
@@ -33,7 +33,7 @@ for device_name, device in testbed.devices.items():
 
     for command in command_list:
         try:
-            assert command in device_config.keys(), "Test that the command exists in running-config"
+            assert command in device_config, "Test that the command exists in running-config"
         except AssertionError:
             print(f"FAIL: '{command}' not found in configuration.")
         else:
