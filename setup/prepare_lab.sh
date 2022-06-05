@@ -47,12 +47,14 @@ echo "Copying lab activity files..."
 echo "******************************************************************************"
 echo
 
+mkdir -p ${TARGET_DIRECTORY}
+
 for LAB in ${LABS}; do
   LAB_PATH=${SCRIPT_BASEPATH}/../${LAB}/lab
   echo "Preparing activity ${LAB}..."
   if [ -d ${LAB_PATH} ]; then
-    mkdir -p ${TARGET_DIRECTORY}/${LAB}
-    cp -prf ${LAB_PATH}/* ${TARGET_DIRECTORY}/${LAB}/
+    # mkdir -p ${TARGET_DIRECTORY}/${LAB}
+    cp -prf ${LAB_PATH}/ ${TARGET_DIRECTORY}/${LAB}/
   else
     echo "No lab directory found - skipping..."
   fi
