@@ -19,7 +19,8 @@ CML_STARTUP_SCRIPT=${SCRIPT_BASEPATH}/launch_topology.py
 CMD="${PYTHON_BIN} ${CML_STARTUP_SCRIPT}"
 
 
-LABS="python-exceptions \
+LABS="git \
+python-exceptions \
 pyats-testbed \
 snapshots \
 pyats-cli \
