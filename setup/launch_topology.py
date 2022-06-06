@@ -114,7 +114,7 @@ if __name__ == "__main__":
     try:
         for lab in cml_labs:
             lab_details = get_cml_lab_details(lab)
-            if "clus" in lab_details.get("lab_title").lower():
+            if "ltrcrt-2157" in lab_details.get("lab_title").lower():
                 start_response = start_cml_lab(lab)
                 print(f"Start request sent.  Response status code: {start_response.status_code}")
                 lab_status = get_cml_lab_details(lab)
