@@ -1,14 +1,15 @@
+---
 access-rtr01:
-    interfaces:
-      Loopback0:
-        description: Update me
-        ospf_process: 1
-        ospf_area: 10
-      GigabitEthernet2:
-        ospf_process: 1
-        ospf_area: 10
-        ospf_network_type: point-to-point
-      GigabitEthernet3:
-        ospf_process: 1
-        ospf_area: 10
-        ospf_network_type: point-to-point
+  interfaces:
+    Loopback0:
+      description: Update me
+      ospf_process: 1
+      ospf_area: 10
+    GigabitEthernet2:
+      ospf_process: 1
+      ospf_area: 10
+      ospf_network_type: point-to-point
+    GigabitEthernet3:
+      ospf_process: 1
+      ospf_area: 10
+      ospf_network_type: point-to-point
