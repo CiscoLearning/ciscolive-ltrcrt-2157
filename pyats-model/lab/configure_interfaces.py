@@ -29,7 +29,7 @@ for device_name, device in testbed.devices.items():
 
     # Save the running config
     if SAVE_CONFIG:
-        device.api.save_running_config_configuration()
+        device.api. # <TODO> - Use an API to apply and save the configuration
 
     print(f"Disconnecting from '{device_name}'")
     device.disconnect()

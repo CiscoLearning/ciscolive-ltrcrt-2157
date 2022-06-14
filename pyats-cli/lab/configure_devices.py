@@ -57,13 +57,14 @@ for device_name, device in testbed.devices.items():
     # inside single curly braces {} will be interpreted and the value printed!
     print(f"Configuring device '{device_name}'...")
 
+
     # Connect to the device and suppress STDOUT
     # By default, pyATS will display all CLI output generated during
     # the connection and setup process, which can be a lot.  To suppress,
     # specify log_stdout=False as a parameter to device.connect()
     print("Connecting to device...")
+    device.connect(log_stdout=False)
 
-    # <TODO> - Connect to the device and disable stdout logging
 
     # Send each command from the command_list to the device.
     # For each command in the command list, issue
@@ -93,5 +94,5 @@ for device_name, device in testbed.devices.items():
     # Disconnect from the device and print a separator string before the next
     # iteration
     print("Disconnecting from device...")
-    # <TODO> - Disconnect from the device
+    device.disconnect()
     print("-" * 78)

@@ -1,5 +1,5 @@
 """
-Docstring
+Update interface OSPF configuration
 """
 import re
 from requests.exceptions import RequestException
@@ -17,6 +17,8 @@ interface_regex = re.compile(r"^(\D+)(.*)$")
 
 print("*" * 78)
 for device_name, device in testbed.devices.items():
+
+
     print(f"Connecting to device '{device_name}'")
     device.connect(via="rest")
 
@@ -30,7 +32,7 @@ for device_name, device in testbed.devices.items():
               f"{interface_type}={interface_index}/ip/{OSPF_MODEL}/ospf"
 
         try:
-            rest_payload = device.api. # <TODO> - Locate correct template API
+            rest_payload = device.api.# <TODO> - Locate correct template API
                 path=TEMPLATE_PATH,
                 # <TODO> - Complete parameters for this API call
             )
