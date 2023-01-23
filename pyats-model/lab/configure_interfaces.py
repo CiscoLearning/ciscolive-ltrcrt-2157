@@ -25,11 +25,11 @@ for device_name, device in testbed.devices.items():
         print(f"\tConfiguring interface {interface_name}")
 
         # How easy is this?
-        interface. # <TODO> - Use a method to build and apply interface config
+        interface. # <TODO_1> - Use a method to build and apply interface config
 
     # Save the running config
     if SAVE_CONFIG:
-        device.api. # <TODO> - Use an API to apply and save the configuration
+        device.api. # <TODO_2> - Use an API to apply and save the configuration
 
     print(f"Disconnecting from '{device_name}'")
     device.disconnect()
