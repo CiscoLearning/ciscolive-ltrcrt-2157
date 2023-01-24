@@ -8,12 +8,12 @@ devices:
         class: unicon.Unicon
         via: cli
       cli:
-        protocol:  # <TODO> - Use ssh as CLI protocol
-        ip:  # <TODO> - Specify correct IP of device
+        protocol:  # <TODO_1> - Use ssh as CLI protocol
+        ip:  # <TODO_2> - Specify correct IP of device
     credentials:
       default:
-        username:  # <TODO> - Specify username for device connection
-        password:  # <TODO> - Specify password for device connection
+        username:  # <TODO_3> - Specify username for device connection
+        password:  # <TODO_4> - Specify password for device connection
 
   core-rtr02:
     os: iosxe
@@ -22,8 +22,8 @@ devices:
       defaults:
         class: unicon.Unicon
         via: cli
-      # <TODO> Create CLI connection using SSH to device
-    # <TODO> Add default credentials for the device
+      # <TODO_5> Create CLI connection using SSH to device
+    # <TODO_6> Add default credentials for the device
 
   access-rtr01:
     os: iosxe
@@ -32,8 +32,8 @@ devices:
       defaults:
         class: unicon.Unicon
         via: cli
-      # <TODO> Create CLI connection using SSH to device
-    # <TODO> Add default credentials for the device
+      # <TODO_7> Create CLI connection using SSH to device
+    # <TODO_8> Add default credentials for the device
 
 topology:
   inet-rtr02:
@@ -44,21 +44,21 @@ topology:
         description: Local Loopback
       GigabitEthernet2:
         type: ethernet
-        # <TODO> Add key/value for GigabitEthernet2 IPv4 address
+        # <TODO_9> Add key/value for GigabitEthernet2 IPv4 address
         description: To GigabitEthernet3.provider-rtr
       GigabitEthernet3:
         type: ethernet
-        description:  # <TODO> Add a useful description for this interface
+        description:  # <TODO_10> Add a useful description for this interface
       GigabitEthernet4:
         type: ethernet
-        # <TODO> Add a useful description for this interface
-      # <TODO> Add remaining ethernet interface and description
+        # <TODO_11> Add a useful description for this interface
+      # <TODO_12> Add remaining ethernet interface and description
 
   core-rtr02:
     interfaces:
       Loopback0:
         type: loopback
-        ipv4: # <TODO> Complete Loopback0 IP information
+        ipv4: # <TODO_13> Complete Loopback0 IP information
         description: Local Loopback
       GigabitEthernet2:
         type: ethernet
@@ -69,13 +69,13 @@ topology:
       GigabitEthernet4:
         type: ethernet
         description: To GigabitEthernet3.access-rtr01
-      # <TODO> Add remaining interfaces and descriptions
+      # <TODO_14> Add remaining interfaces and descriptions
 
   access-rtr01:
     interfaces:
       Loopback0:
         type: loopback
-        ipv4: # <TODO> Complete Loopback0 IP information
+        ipv4: # <TODO_15> Complete Loopback0 IP information
         description: Local Loopback
       GigabitEthernet2:
         type: ethernet

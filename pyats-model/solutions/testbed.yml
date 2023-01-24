@@ -17,8 +17,6 @@ topology:
         unnumbered_intf_ref: Loopback0
       GigabitEthernet5:
         unnumbered_intf_ref: Loopback0
-      GigabitEthernet6:
-        shutdown: false
 
   access-rtr01:
     interfaces:

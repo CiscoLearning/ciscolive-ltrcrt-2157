@@ -29,7 +29,7 @@ class CommonSetup(aetest.CommonSetup):
 
         :return: None (no return)
         """
-        testbed. # <TODO> - Connect to each device without showing CLI output
+        testbed. # <TODO_1> - Connect to each device without showing CLI output
 
     @aetest.subsection
     def mark_tests_for_looping(self, testbed):  # , perform_configuration):
@@ -87,7 +87,7 @@ class TestNTP(aetest.Testcase):
         """
 
         desired_source_interface = self.device.custom.ntp_source
-        configured_source_interface = self.device. # <TODO> - Use a Genie API to get the NTP source interface
+        configured_source_interface = self.device. # <TODO_2> - Use a Genie API to get the NTP source interface
 
         # Observe that a simple pass/fail result will be generated based on
         # the test of the desired state (from the testbed) to the configured
@@ -95,7 +95,7 @@ class TestNTP(aetest.Testcase):
         # API. In this scenario, the self.failed or self.passed state is set
         # to indicate pass/fail status of this test.
         try:
-            assert # <TODO> - Assert that the desired source interface exists in the configuration
+            assert # <TODO_3> - Assert that the desired source interface exists in the configuration
 
         except TypeError:  # Raised if the configured interface is "None"
             self.failed("No source interface configured on device")
@@ -119,8 +119,8 @@ class TestNTP(aetest.Testcase):
         """
 
         try:
-            assert  # <TODO> - Verify the ntp server exists in the configured server list
-        # <TODO> - Catch the TypeError exception if no NTP servers are configured
+            assert  # <TODO_4> - Verify the ntp server exists in the configured server list
+        # <TODO_5> - Catch the TypeError exception if no NTP servers are configured
         except AssertionError:
             self.failed(f"Server {ntp_server} not present in running config")
         else:

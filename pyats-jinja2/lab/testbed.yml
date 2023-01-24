@@ -34,10 +34,10 @@ devices:
   core-rtr02:
     custom:
       ntp_servers:
-        -  # <TODO> - Define NTP server list for core-rtr02
-      ntp_source:  # <TODO> - Define NTP source interface
+        -  # <TODO_1> - Define NTP server list for core-rtr02
+      ntp_source:  # <TODO_2> - Define NTP source interface
 
   access-rtr01:
     custom:
-      ntp_servers:  # <TODO> - Define NTP server list for access-rtr01
-      # <TODO> - Define key and value for NTP source interface
+      ntp_servers:  # <TODO_3> - Define NTP server list for access-rtr01
+      # <TODO_4> - Define key and value for NTP source interface

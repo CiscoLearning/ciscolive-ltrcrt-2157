@@ -18,7 +18,7 @@ TESTBED = "testbed.yml"
 # TEMPLATE_DIR will be used as the path to locate Jinja2 templates
 # and TEMPLATE_FILE will be used to specify the template file to be read.
 TEMPLATE_DIR = "templates"
-TEMPLATE_FILE = ""  # <TODO> - Define the template filename to load
+TEMPLATE_FILE = ""  # <TODO_1> - Define the template filename to load
 
 testbed = loader.load(TESTBED)
 
@@ -27,7 +27,7 @@ for device_name, device in testbed.devices.items():
     print(f"Connecting to device '{device_name}'")
     device.connect(log_stdout=False)
 
-    device_template = device.api. # <TODO> - Locate API to return Jinja2 object
+    device_template = device.api. # <TODO_2> - Locate API to return Jinja2 object
         templates_dir=TEMPLATE_DIR, template_name=TEMPLATE_FILE
     )
 
@@ -35,10 +35,10 @@ for device_name, device in testbed.devices.items():
         # Other than the template parameter which specifies the
         # template object to load, any other key/value pair will be passed
         # to Jinja2 and accessible inside the template for rendering.
-        device.api.TODO  # <TODO> - Locate API to configure device with Jinja2 template
-            template= # <TODO> Specify the template object variable from line 30
-            ntp_source=device.custom.  # <TODO> - Specify NTP source custom variable
-            ntp_servers=device.custom.  # <TODO> - Specify NTP servers custom variable
+        device.api.  # <TODO_3> - Locate API to configure device with Jinja2 template
+            template= # <TODO_4> Specify the template object variable from line 30
+            ntp_source=device.custom.  # <TODO_5> - Specify NTP source custom variable
+            ntp_servers=device.custom.  # <TODO_6> - Specify NTP servers custom variable
         )
     except SubCommandFailure as err:
         print(f"Failed to configure device:\n{err}")

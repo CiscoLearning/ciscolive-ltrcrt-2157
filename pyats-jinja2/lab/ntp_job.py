@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 test_path = os.path.dirname(os.path.abspath(__file__))
 
 # Define the testscript to execute
-testscript = os.path.join(test_path, "")  # <TODO> - Set name of testscript
+testscript = os.path.join(test_path, "")  # <TODO> - Set name of testscript file as a parameter
 
 
 def main(runtime):

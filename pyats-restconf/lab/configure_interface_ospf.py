@@ -32,7 +32,7 @@ for device_name, device in testbed.devices.items():
               f"{interface_type}={interface_index}/ip/{OSPF_MODEL}/ospf"
 
         try:
-            rest_payload = device.api.# <TODO> - Locate correct template API
+            rest_payload = device.api.# <TODO_1> - Locate correct template API
                 path=TEMPLATE_PATH,
                 # <TODO> - Complete parameters for this API call
             )
@@ -56,7 +56,7 @@ for device_name, device in testbed.devices.items():
         try:
             url = f"{url}/network"
 
-            rest_payload = device.api. # <TODO> - Load the template via API
+            rest_payload = device.api. # <TODO_2> - Load the template via API
                 # <TODO> - Supply necessary parameters to this API
             )
 
