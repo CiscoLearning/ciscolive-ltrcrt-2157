@@ -1,0 +1,10 @@
+--------------------------------------------------------------
+MANUAL CONFIGURATION CHANGES TO THIS DEVICE IS PROHIBITED
+--------------------------------------------------------------
+This device is configured through an automated process.
+You must have explicit, authorized permission to access or configure this outside the automaton flow.
+
+Unauthorized attempts and actions to access or use this system may result in civil and/or criminal penalties.
+All activities performed on this device are logged and monitored.
+
+--------------------------------------------------------------
