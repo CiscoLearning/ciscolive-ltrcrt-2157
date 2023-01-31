@@ -1,6 +1,5 @@
 ---
 extends: "%ENV{HOME}/abc-en/pyats-testbed/testbed.yml"
-
 devices:
   inet-rtr02:
     connections:

@@ -1,30 +1,55 @@
+'''
+Script to automate changing the banner message of IOS XE device.
+
+Reads file "banner.txt" into variable "banner", which is then
+updated on the device using RESTCONF patch method.
+'''
+
 from pyats.topology import loader
+from requests.exceptions import RequestException
 
 TEMPLATE_PATH = "./templates"
 TESTBED = "testbed.yml"
+BANNER_TEXT_FILE = "banner.txt"
 
-def read_banner_text(banner_file):
-    with open(banner_file, "r", encoding="utf-8") as file:
-        banner = file.read()
-    return banner
+# Open the banner text file and save the text into banner
+with open(BANNER_TEXT_FILE, "r", encoding="utf-8") as file:
+    banner = file.read()
 
-def create_payload(template, value):
-    payload = ""
-    return payload
-
-def configure_banner_with_restconf(device, payload):
-    device.connect(via="rest")
-    url = "/restconf/data/Cisco-IOS-XE-native:native/banner/login/banner"
-    device.rest.patch(
-            api_url = url,
-            payload = payload,
-            content_type = "application/yang-data+json"
-            )
-
-
-banner_text = read_banner_text()
-banner_payload = create_payload()
+print(f"Banner to be configured:\n{banner}")
 
 testbed = loader.load(TESTBED)
-for device in testbed.devices:
-    configure_banner_with_restconf(device)
+
+print("*" * 78)
+# Loop through each of the device in the testbed
+for device_name, device in testbed.devices.items():
+    print(f"Connecting to device '{device_name}'")
+    device.connect(via="rest")
+
+    # Load the Jinja2 template and replace the variable
+    # banner message with the text saved from the text
+    # file.
+    rest_payload = device.api.load_jinja_template(
+            path=TEMPLATE_PATH,
+                file="banner_message.j2",
+                banner_message=banner,
+            )
+    try:
+        print("Configuring banner...", end=" ")
+        API_URL = "/restconf/data/Cisco-IOS-XE-native:native/banner/login"
+        # Configure using the RESTCONF method patch.
+        # Note that we beed to be in /banner/login level instead of
+        # /banner/login/banner, because patch require the endpoint to exist.
+        # If no banner has been configured, the leaf banner would not exist.
+        config_result = device.rest.patch(
+                    api_url = API_URL,
+                    payload = rest_payload,
+                    content_type = "application/yang-data+json"
+                    )
+    # If the previous results in an error, print the error message
+    except RequestException as err:
+        print(f"FAILED: Error details:\n\t\t\t{err}")
+    else:
+        print(f"SUCCESS: {config_result.status_code} ({config_result.reason})")
+    device.disconnect()
+    print("*" * 78)
