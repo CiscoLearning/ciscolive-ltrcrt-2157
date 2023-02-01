@@ -2,7 +2,7 @@
 Script to automate changing the banner message of IOS XE device.
 
 Reads file "banner.txt" into variable "banner", which is then
-updated on the device using RESTCONF patch method.
+updated on the device using RESTCONF put method.
 '''
 
 from pyats.topology import loader
