@@ -13,7 +13,7 @@ equivalent of text / strings that can then be used as CLI commands inside pyATS
 or whatever automation platform you are using that supports Jinja2.
 #}
 {# Define the NTP source interface #}
-ntp source {{ ntp_source }}
+ntp source {{ <TODO_1 - Replace with a variable for NTP source interface> }}
 {#
 Many conditionals or iterators are supports inside Jinja2, and the
 syntax is very similar to Python.  The important component is that Jinja2
@@ -21,7 +21,7 @@ operations MUST be enclosed within curly-brace-percent syntax such as
 {% Jinja2_expression %} and MUST terminate with an ending statement such as
 endif or endfor with no options, such as: {% endfor %}
 #}
-{% for ntp_server in ntp_servers %}
+{% for ntp_server in <TODO_2 - Replace with the list of NTP servers> %}
 {# For each element in ntp_servers, config the NTP server: #}
 ntp server {{ ntp_server }}
 {# Mandatory terminating loop tag - "endfor" #}
