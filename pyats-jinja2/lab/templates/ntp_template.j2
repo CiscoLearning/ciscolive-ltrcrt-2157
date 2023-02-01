@@ -1,26 +1,29 @@
 {#
-Jinja2 comments begin with a curly brace { and a hash # and end with a
-closing hash # and curly brace }.  Anything inside this comment
-section will NOT be rendered, and will not create a newline when the template
-is rendered, so it's a good way to indicate developer intent inside a template.
+    Jinja2 comments begin with a curly brace { and a hash # and end with a
+    closing hash # and curly brace }.  Anything inside this comment
+    section will NOT be rendered, and will not create a newline when the template
+    is rendered, so it's a good way to indicate developer intent inside a template.
 #}
 {#
-Begin the template logic.  Jinja2 will treat anything inside double
-curly-braces {{  }} as a variable to be interpreted and replaced.  An exception
-will be generated if a variable is referenced that is not passed to the
-template by the calling script.  Once rendered, the template will result in the
-equivalent of text / strings that can then be used as CLI commands inside pyATS
-or whatever automation platform you are using that supports Jinja2.
+    Begin the template logic.  Jinja2 will treat anything inside double
+    curly-braces {{  }} as a variable to be interpreted and replaced.  An exception
+    will be generated if a variable is referenced that is not passed to the
+    template by the calling script.  Once rendered, the template will result in the
+    equivalent of text / strings that can then be used as CLI commands inside pyATS
+    or whatever automation platform you are using that supports Jinja2.
 #}
+
 {# Define the NTP source interface #}
 ntp source {{ <TODO_1 - Replace with a variable for NTP source interface> }}
+
 {#
-Many conditionals or iterators are supports inside Jinja2, and the
-syntax is very similar to Python.  The important component is that Jinja2
-operations MUST be enclosed within curly-brace-percent syntax such as
-{% Jinja2_expression %} and MUST terminate with an ending statement such as
-endif or endfor with no options, such as: {% endfor %}
+    Many conditionals or iterators are supports inside Jinja2, and the
+    syntax is very similar to Python.  The important component is that Jinja2
+    operations MUST be enclosed within curly-brace-percent syntax such as
+    {% Jinja2_expression %} and MUST terminate with an ending statement such as
+    endif or endfor with no options, such as: {% endfor %}
 #}
+
 {% for ntp_server in <TODO_2 - Replace with the list of NTP servers> %}
 {# For each element in ntp_servers, config the NTP server: #}
 ntp server {{ ntp_server }}
