@@ -2,7 +2,7 @@
 Script to automate changing the banner message of IOS XE device.
 
 Reads file "banner.txt" into variable "banner", which is then
-updated on the device using RESTCONF patch method.
+updated on the device using RESTCONF put method.
 '''
 
 from pyats.topology import loader
@@ -31,17 +31,13 @@ for device_name, device in testbed.devices.items():
     # file.
     rest_payload = device.api.load_jinja_template(
             path=TEMPLATE_PATH,
-                file="banner_message.j2",
-                banner_message=banner,
+            file="banner_message.j2",
+            banner_message=banner,
             )
     try:
         print("Configuring banner...", end=" ")
-        API_URL = "/restconf/data/Cisco-IOS-XE-native:native/banner/login"
-        # Configure using the RESTCONF method patch.
-        # Note that we beed to be in /banner/login level instead of
-        # /banner/login/banner, because patch require the endpoint to exist.
-        # If no banner has been configured, the leaf banner would not exist.
-        config_result = device.rest.patch(
+        API_URL = "/restconf/data/Cisco-IOS-XE-native:native/banner/login/banner"
+        config_result = device.rest.put(
                     api_url = API_URL,
                     payload = rest_payload,
                     content_type = "application/yang-data+json"
