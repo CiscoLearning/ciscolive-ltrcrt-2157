@@ -26,7 +26,8 @@ snapshots \
 pyats-cli \
 pyats-jinja2 \
 pyats-model \
-pyats-restconf"
+restconf"
+# pyats-restconf"
 
 # Execute the setup tasks....
 echo
