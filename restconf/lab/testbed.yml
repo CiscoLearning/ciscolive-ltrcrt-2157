@@ -1,0 +1,30 @@
+---
+extends: "%ENV{HOME}/abc-en/pyats-testbed/testbed.yml"
+devices:
+  inet-rtr02:
+    connections:
+      rest:
+        class: rest.connector.Rest
+        ip: 198.18.1.11
+        credentials:
+          rest:
+            username: cisco
+            password: cisco
+  core-rtr02:
+    connections:
+      rest:
+        class: rest.connector.Rest
+        ip: 198.18.1.13
+        credentials:
+          rest:
+            username: cisco
+            password: cisco
+  access-rtr01:
+    connections:
+      rest:
+        class: rest.connector.Rest
+        ip: 198.18.1.14
+        credentials:
+          rest:
+            username: cisco
+            password: cisco
