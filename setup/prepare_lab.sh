@@ -38,13 +38,14 @@ echo
 
 sudo apt-get install -y man
 
-echo "******************************************************************************"
-echo "Pulling latest content from remote repository..."
-echo "******************************************************************************"
-echo
-
-cd ${SCRIPT_BASEPATH}/..
-git pull
+# This should be performed as the first step in the lab.
+#echo "******************************************************************************"
+#echo "Pulling latest content from remote repository..."
+#echo "******************************************************************************"
+#echo
+#
+#cd ${SCRIPT_BASEPATH}/..
+#git pull
 
 echo "******************************************************************************"
 echo "Starting CML topology..."

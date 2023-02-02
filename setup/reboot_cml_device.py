@@ -172,9 +172,10 @@ def start_cml_lab(lab_id):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-n",
-                        dest="target_node",
+                        dest="node_name",
                         action="store",
-                        help="Name of node to restart")
+                        help="Name of node to restart",
+                        required=True)
     args = parser.parse_known_args()[0]
 
     cml_labs = get_cml_labs()
@@ -187,7 +188,7 @@ if __name__ == "__main__":
                 lab_nodes = get_cml_lab_nodes(lab)
                 for node in lab_nodes:
                     node_details = get_cml_node_details(lab, node)
-                    if args.target_node.lower() == node_details["data"]["label"].lower():
+                    if args.node_name.lower() == node_details["data"]["label"].lower():
                         print("Node ID located, restarting device...")
                         restart_response = restart_cml_node(lab, node)
                         if restart_response:

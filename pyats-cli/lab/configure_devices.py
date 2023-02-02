@@ -59,6 +59,9 @@ for device_name, device in testbed.devices.items():
             # The command was successfully sent, print OK as the result
             print("OK")
 
+    # Save the running configuration
+    device.api.save_running_config_configuration()
+
     print("Disconnecting from device...")
     device.disconnect()
     print("-" * 78)

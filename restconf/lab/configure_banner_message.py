@@ -36,7 +36,7 @@ for device_name, device in testbed.devices.items():
             )
     try:
         print("Configuring banner...", end=" ")
-        API_URL = "/restconf/<TODO5>" # Add the correct RESTCONF URL
+        API_URL = "/restconf/<TODO_5>" # Add the correct RESTCONF URL
         config_result = device.rest.<TODO_6>( # Add the correct method
                     api_url = API_URL,
                     payload = <TODO_7>, # Add the correct payload

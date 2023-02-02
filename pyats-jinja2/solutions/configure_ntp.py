@@ -42,6 +42,10 @@ for device_name, device in testbed.devices.items():
         )
     except SubCommandFailure as err:
         print(f"Failed to configure device:\n{err}")
+    else:
+        print("Device configured successfully.")
+        # Save the running configuration
+        device.api.save_running_config_configuration()
 
     print(f"Disconnecting from '{device_name}'")
     device.disconnect()
